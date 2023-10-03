@@ -6,7 +6,7 @@ import jakarta.persistence.Persistence;
 public class Main {
     public static void main(String[] args) {
         Message message = new Message();
-        message.setText("Hello, JPA!");
+        message.setText("And again, JPA!");
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
         EntityManager em = emf.createEntityManager();
