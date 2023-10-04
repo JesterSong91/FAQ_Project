@@ -1,22 +1,28 @@
+package ui;
+
 import entity.QuestionAnswer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-public class Main {
-    public static void main(String[] args) {
-        QuestionAnswer questionAnswer = new QuestionAnswer();
-        questionAnswer.setQuestionText("My fourth question!");
-        questionAnswer.setAnswerText("My fourth answer with code!");
+public class QuestionAnswerOperation {
 
-        String example_code_several_lines = "@Entity \n" +
-                "public class Message {\n" +
-                "   \n" +
-                "public Message() {\n" +
-                "   \n" +
-                "}  \n"+
-                "   \n" +
-                "} \n";
+    private String question;
+    private String answer;
+    private String codeText;
+
+    public QuestionAnswerOperation(String question, String answer, String codeText) {
+        this.question = question;
+        this.answer = answer;
+        this.codeText = codeText;
+    }
+
+    public void performInsertNewFAQ() {
+        QuestionAnswer questionAnswer = new QuestionAnswer();
+        questionAnswer.setQuestionText(question);
+        questionAnswer.setAnswerText(answer);
+
+        String example_code_several_lines = codeText;
 
         questionAnswer.setAnswerExampleCode(example_code_several_lines);
 
@@ -24,7 +30,6 @@ public class Main {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(questionAnswer);
-        //System.out.println("Em: " + em);
         em.getTransaction().commit();
         em.close();
         emf.close();
