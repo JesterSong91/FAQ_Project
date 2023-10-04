@@ -1,11 +1,9 @@
 package entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Question_Answer")
 public class QuestionAnswer {
     public QuestionAnswer() {
 
@@ -15,8 +13,13 @@ public class QuestionAnswer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "question_text")
     private String questionText;
+
+    @Column(name = "answer_text")
     private String answerText;
+
+    @Column(name = "code_text")
     private String answerExampleCode;
 
     public Long getId() {
