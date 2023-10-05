@@ -45,9 +45,10 @@ public class FAQMain extends JPanel {
             @Override
             public void run() {
 
-                JFrame frame = new JFrame("GUIApp");
+                JFrame frame = new JFrame("FAQ");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().add(new FAQMain().rootPanel);
+                frame.setPreferredSize(new Dimension(500, 500));
                 frame.pack();
                 frame.setVisible(true);
 
