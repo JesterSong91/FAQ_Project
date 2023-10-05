@@ -1,12 +1,10 @@
 package ui;
 
 import entity.QuestionAnswer;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,6 +17,7 @@ public class FAQMain extends JPanel {
     private JLabel QuestionLabel;
     private JTextArea QuestionTextArea;
     private JPanel rootPanel;
+    private JButton ShowContent;
 
     public QuestionAnswerOperation qao;
 
@@ -37,6 +36,23 @@ public class FAQMain extends JPanel {
                 System.out.println(a + " " + q + " " + code);
 
                 qao.performInsertNewFAQ();
+            }
+        });
+
+        ShowContent.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String a = AnswerTextArea.getText();
+                String q = QuestionTextArea.getText();
+                String code = AnswerCodeTextArea.getText();
+                qao = new QuestionAnswerOperation(q, a, code);
+
+                List<QuestionAnswer> data = qao.findWithName(a);
+
+                for (QuestionAnswer curr_elem : data
+                     ) {
+                    System.out.print(curr_elem.getAnswerText() + ", ");
+                }
             }
         });
     }
