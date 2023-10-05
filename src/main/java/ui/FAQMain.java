@@ -24,6 +24,8 @@ public class FAQMain extends JPanel {
 
     public FAQMain() {
 
+        System.out.println("For fake commit... Just in order to rollback this change");
+
         AddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
