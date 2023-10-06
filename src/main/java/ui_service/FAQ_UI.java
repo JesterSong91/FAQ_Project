@@ -1,14 +1,14 @@
-package ui;
+package ui_service;
 
 import entity.QuestionAnswer;
+import ui.QuestionAnswerOperation;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
-public class FAQMain extends JPanel {
+public class FAQ_UI {
     private JTextArea AnswerTextArea;
     private JTextArea AnswerCodeTextArea;
     private JButton AddButton;
@@ -16,7 +16,7 @@ public class FAQMain extends JPanel {
     private JLabel AnswerLabel;
     private JLabel QuestionLabel;
     private JTextArea QuestionTextArea;
-    private JPanel rootPanel;
+    public JPanel rootPanel;
     private JButton ShowContent;
     private JTable AnswersTable;
     private JLabel SearchLabel;
@@ -25,10 +25,7 @@ public class FAQMain extends JPanel {
 
     public QuestionAnswerOperation qao;
 
-    public FAQMain() {
-
-        System.out.println("For fake commit... Just in order to rollback this change");
-
+    public FAQ_UI() {
         AddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,28 +51,10 @@ public class FAQMain extends JPanel {
                 List<QuestionAnswer> data = qao.findWithName(a);
 
                 for (QuestionAnswer curr_elem : data
-                     ) {
+                ) {
                     System.out.print(curr_elem.getAnswerText() + ", ");
                 }
             }
         });
-    }
-
-    public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-
-                JFrame frame = new JFrame("FAQ");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.getContentPane().add(new FAQMain().rootPanel);
-                frame.setPreferredSize(new Dimension(900, 700));
-                frame.pack();
-                frame.setVisible(true);
-
-            }
-        });
-
     }
 }
