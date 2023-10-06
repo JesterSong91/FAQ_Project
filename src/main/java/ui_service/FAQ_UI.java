@@ -26,30 +26,32 @@ public class FAQ_UI {
 
     public QuestionAnswerOperation qao;
 
+    private String answerText;
+    private String questionText;
+    private String answerCodeText;
+
     public FAQ_UI() {
+        qao = new QuestionAnswerOperation();
+
         AddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String a = AnswerTextArea.getText();
-                String q = QuestionTextArea.getText();
-                String code = AnswerCodeTextArea.getText();
-                qao = new QuestionAnswerOperation(q, a, code);
+                answerText = AnswerTextArea.getText();
+                questionText = QuestionTextArea.getText();
+                answerCodeText = AnswerCodeTextArea.getText();
 
-                System.out.println(a + " " + q + " " + code);
+                System.out.println(answerText + " " + questionText + " " + answerCodeText);
 
-                qao.performInsertNewFAQ();
+                qao.performInsertNewFAQ(answerText, questionText, answerCodeText);
             }
         });
 
         ShowContent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String a = AnswerTextArea.getText();
-                String q = QuestionTextArea.getText();
-                String code = AnswerCodeTextArea.getText();
-                qao = new QuestionAnswerOperation(q, a, code);
+                String answerText = AnswerTextArea.getText();
 
-                List<QuestionAnswer> data = qao.findWithName(a);
+                List<QuestionAnswer> data = qao.findWithName(answerText);
 
                 for (QuestionAnswer curr_elem : data
                 ) {

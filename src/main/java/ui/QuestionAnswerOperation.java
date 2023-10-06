@@ -12,9 +12,34 @@ public class QuestionAnswerOperation {
     private String answer;
     private String codeText;
 
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public String getCodeText() {
+        return codeText;
+    }
+
+    public void setCodeText(String codeText) {
+        this.codeText = codeText;
+    }
+
     private EntityManagerFactory emf;
     private EntityManager em;
 
+    @Deprecated
     public QuestionAnswerOperation(String question, String answer, String codeText) {
         this.question = question;
         this.answer = answer;
@@ -24,7 +49,14 @@ public class QuestionAnswerOperation {
         em = emf.createEntityManager();
     }
 
-    public void performInsertNewFAQ() {
+    public QuestionAnswerOperation() {
+    }
+
+    public void performInsertNewFAQ(String question, String answer, String codeText) {
+        this.question = question;
+        this.answer = answer;
+        this.codeText = codeText;
+
         QuestionAnswer questionAnswer = new QuestionAnswer();
         questionAnswer.setQuestionText(question);
         questionAnswer.setAnswerText(answer);
