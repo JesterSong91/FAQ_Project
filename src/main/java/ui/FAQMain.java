@@ -21,6 +21,7 @@ public class FAQMain extends JPanel {
     private JTable AnswersTable;
     private JLabel SearchLabel;
     private JTextField SearchField;
+    private JButton SearchButton;
 
     public QuestionAnswerOperation qao;
 
@@ -69,7 +70,7 @@ public class FAQMain extends JPanel {
                 JFrame frame = new JFrame("FAQ");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().add(new FAQMain().rootPanel);
-                frame.setPreferredSize(new Dimension(500, 500));
+                frame.setPreferredSize(new Dimension(900, 700));
                 frame.pack();
                 frame.setVisible(true);
 
