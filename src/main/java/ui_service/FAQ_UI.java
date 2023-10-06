@@ -67,9 +67,6 @@ public class FAQ_UI {
     }
 
     public void initTable() {
-        System.out.println("AnswersTable: " + AnswersTable);
-        System.out.println("rootPanel: " + rootPanel);
-
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.setColumnIdentifiers(new String[] {"Question", "Answer", "Answer Code"});
 
