@@ -18,6 +18,9 @@ public class FAQMain extends JPanel {
     private JTextArea QuestionTextArea;
     private JPanel rootPanel;
     private JButton ShowContent;
+    private JTable AnswersTable;
+    private JLabel SearchLabel;
+    private JTextField SearchField;
 
     public QuestionAnswerOperation qao;
 
