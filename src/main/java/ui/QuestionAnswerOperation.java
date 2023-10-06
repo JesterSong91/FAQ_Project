@@ -50,6 +50,8 @@ public class QuestionAnswerOperation {
     }
 
     public QuestionAnswerOperation() {
+        emf = Persistence.createEntityManagerFactory("default");
+        em = emf.createEntityManager();
     }
 
     public void performInsertNewFAQ(String question, String answer, String codeText) {
@@ -75,6 +77,12 @@ public class QuestionAnswerOperation {
     public List findWithName(String name) {
         return em.createQuery("Select faq from QuestionAnswer faq where faq.answerText LIKE :ansName")
                 .setParameter("ansName", name)
+//                .setMaxResults(10)
+                .getResultList();
+    }
+
+    public List findAllData() {
+        return em.createQuery("Select faq from QuestionAnswer faq")
                 .setMaxResults(10)
                 .getResultList();
     }
