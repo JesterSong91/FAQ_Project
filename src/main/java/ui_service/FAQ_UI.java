@@ -4,6 +4,7 @@ import entity.QuestionAnswer;
 import ui.QuestionAnswerOperation;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -56,5 +57,15 @@ public class FAQ_UI {
                 }
             }
         });
+
+        System.out.println("AnswersTable: " + AnswersTable);
+        System.out.println("rootPanel: " + rootPanel);
+
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.setColumnIdentifiers(new String[] {"Question", "Answer", "Answer Code"});
+
+        dtm.addRow(new Object[] {"Some q", "Some a", "Some a c"});
+
+        AnswersTable.setModel(dtm);
     }
 }
