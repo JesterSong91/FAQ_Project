@@ -33,6 +33,11 @@ public class FAQ_UI {
     public FAQ_UI() {
         qao = new QuestionAnswerOperation();
 
+        initButtonsActionListeners();
+        initTable();
+    }
+
+    public void initButtonsActionListeners() {
         AddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,7 +64,9 @@ public class FAQ_UI {
                 }
             }
         });
+    }
 
+    public void initTable() {
         System.out.println("AnswersTable: " + AnswersTable);
         System.out.println("rootPanel: " + rootPanel);
 
