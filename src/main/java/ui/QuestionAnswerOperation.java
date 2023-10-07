@@ -75,8 +75,8 @@ public class QuestionAnswerOperation {
     }
 
     public List findWithName(String name) {
-        return em.createQuery("Select faq from QuestionAnswer faq where faq.answerText LIKE :ansName")
-                .setParameter("ansName", name)
+        return em.createQuery("Select faq from QuestionAnswer faq where faq.questionText LIKE :qName")
+                .setParameter("qName", name)
 //                .setMaxResults(10)
                 .getResultList();
     }

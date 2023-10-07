@@ -3,13 +3,14 @@ package entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Question_Answer")
+@Table(name = "FAQ_QUESTION_ANSWER")
 public class QuestionAnswer {
     public QuestionAnswer() {
 
     }
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -21,6 +22,9 @@ public class QuestionAnswer {
 
     @Column(name = "code_text")
     private String answerExampleCode;
+
+    @Column(name = "tag_id")
+    private Long tagId;
 
     public Long getId() {
         return id;
@@ -52,5 +56,13 @@ public class QuestionAnswer {
 
     public void setAnswerExampleCode(String answerExampleCode) {
         this.answerExampleCode = answerExampleCode;
+    }
+
+    public Long getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(Long tagText) {
+        this.tagId = tagText;
     }
 }
