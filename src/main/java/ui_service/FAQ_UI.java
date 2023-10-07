@@ -1,7 +1,9 @@
 package ui_service;
 
 import entity.QuestionAnswer;
+import entity.Tag;
 import ui.QuestionAnswerOperation;
+import ui.TagOperation;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -26,8 +28,13 @@ public class FAQ_UI {
     private JLabel FilterLabel;
     private JTextField FilterTextField;
     private JButton FilterButton;
+    private JLabel TagFilterLabel;
+    private JComboBox TagFilterComboBox;
+    private JComboBox TagComboBox;
+    private JLabel TagLabel;
 
     public QuestionAnswerOperation qao;
+    public TagOperation to;
 
     private String answerText;
     private String questionText;
@@ -38,12 +45,18 @@ public class FAQ_UI {
     private TableRowSorter myRowSorter;
 
     private DefaultTableModel dtm;
+    private DefaultComboBoxModel dcbm;
+
+    private List<Tag> tags;
 
     public FAQ_UI() {
         qao = new QuestionAnswerOperation();
+        to = new TagOperation();
 
         initButtonsActionListeners();
         initTable();
+        initTagComboBox();
+
     }
 
     public void initButtonsActionListeners() {
@@ -53,10 +66,11 @@ public class FAQ_UI {
                 answerText = AnswerTextArea.getText();
                 questionText = QuestionTextArea.getText();
                 answerCodeText = AnswerCodeTextArea.getText();
+                Long tagId = (long) TagComboBox.getSelectedIndex() + 1;
 
                 System.out.println(answerText + " " + questionText + " " + answerCodeText);
 
-                qao.performInsertNewFAQ(answerText, questionText, answerCodeText);
+                qao.performInsertNewFAQ(answerText, questionText, answerCodeText, tagId);
             }
         });
 
@@ -182,5 +196,20 @@ public class FAQ_UI {
         };
 
         return myRowFilter;
+    }
+
+    public void initTagComboBox() {
+        dcbm = new DefaultComboBoxModel();
+
+        tags = to.findAllTags();
+
+        for (Tag currentTag : tags) {
+            dcbm.addElement(currentTag.getTagName());
+        }
+
+        TagComboBox.setModel(dcbm);
+
+
+
     }
 }
