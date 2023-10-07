@@ -28,7 +28,6 @@ public class TagOperation {
 
     public List findAllTags() {
         return em.createQuery("Select tag from Tag tag")
-//                .setMaxResults(10)
                 .getResultList();
     }
 }

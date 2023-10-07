@@ -91,11 +91,6 @@ public class FAQ_UI {
         FilterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                String answerText = AnswerTextArea.getText();
-//
-//                List<QuestionAnswer> data = qao.findWithName(answerText);
-//
-
                 myRowSorter.setRowFilter(rowFilterFactory(FilterTextField.getText()));
                 myRowSorter.setRowFilter(rowFilterFactory(TagFilterComboBox.getSelectedItem().toString()));
             }
