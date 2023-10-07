@@ -97,6 +97,7 @@ public class FAQ_UI {
 //
 
                 myRowSorter.setRowFilter(rowFilterFactory(FilterTextField.getText()));
+                myRowSorter.setRowFilter(rowFilterFactory(TagFilterComboBox.getSelectedItem().toString()));
             }
         });
     }
@@ -208,7 +209,7 @@ public class FAQ_UI {
         }
 
         TagComboBox.setModel(dcbm);
-
+        TagFilterComboBox.setModel(dcbm);
 
 
     }
