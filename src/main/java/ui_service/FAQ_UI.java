@@ -93,7 +93,10 @@ public class FAQ_UI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 myRowSorter.setRowFilter(rowFilterFactory(FilterTextField.getText()));
-                myRowSorter.setRowFilter(rowFilterFactory(TagFilterComboBox.getSelectedItem().toString()));
+
+                if (!TagFilterComboBox.getSelectedItem().equals("empty")) {
+                    myRowSorter.setRowFilter(rowFilterFactory(TagFilterComboBox.getSelectedItem().toString()));
+                }
             }
         });
     }
@@ -121,7 +124,7 @@ public class FAQ_UI {
 
                 int chosenRowIndex = 0;
 
-                ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 int firstIndex = e.getFirstIndex();
                 int lastIndex = e.getLastIndex();
@@ -145,32 +148,32 @@ public class FAQ_UI {
                     }
                 }
 
-                System.out.println("dtm: " + dtm);
+                System.out.println("chosenRowIndex: " + chosenRowIndex);
+
+                try {
+                    chosenRowIndex = AnswersTable.convertRowIndexToModel(chosenRowIndex);
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    System.out.println("Do nothing!");
+                    return;
+                }
 
                 try {
                     questionText = dtm.getValueAt(chosenRowIndex, 0).toString();
-                }
-                catch (NullPointerException ex){
+                } catch (NullPointerException ex) {
                     questionText = new String();
                 }
 
                 try {
                     answerText = dtm.getValueAt(chosenRowIndex, 1).toString();
-                }
-                catch (NullPointerException ex){
+                } catch (NullPointerException ex) {
                     answerText = new String();
                 }
 
                 try {
                     answerCodeText = dtm.getValueAt(chosenRowIndex, 2).toString();
-                }
-                catch (NullPointerException ex) {
+                } catch (NullPointerException ex) {
                     answerCodeText = new String();
                 }
-
-                System.out.println("questionText: " + questionText);
-                System.out.println("answerText: " + answerText);
-                System.out.println("answerCodeText: " + answerCodeText);
 
                 QuestionTextArea.setText(questionText);
                 AnswerTextArea.setText(answerText);
@@ -205,6 +208,8 @@ public class FAQ_UI {
             defCBoxModelTag.addElement(currentTag.getTagName());
             defCBoxModelTagFilter.addElement(currentTag.getTagName());
         }
+
+        defCBoxModelTagFilter.addElement("empty");
 
         TagComboBox.setModel(defCBoxModelTag);
         TagFilterComboBox.setModel(defCBoxModelTagFilter);
