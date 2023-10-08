@@ -45,7 +45,8 @@ public class FAQ_UI {
     private TableRowSorter myRowSorter;
 
     private DefaultTableModel dtm;
-    private DefaultComboBoxModel dcbm;
+    private DefaultComboBoxModel defCBoxModelTag;
+    private DefaultComboBoxModel defCBoxModelTagFilter;
 
     private List<Tag> tags;
 
@@ -195,16 +196,18 @@ public class FAQ_UI {
     }
 
     public void initTagComboBox() {
-        dcbm = new DefaultComboBoxModel();
+        defCBoxModelTag = new DefaultComboBoxModel();
+        defCBoxModelTagFilter = new DefaultComboBoxModel();
 
         tags = to.findAllTags();
 
         for (Tag currentTag : tags) {
-            dcbm.addElement(currentTag.getTagName());
+            defCBoxModelTag.addElement(currentTag.getTagName());
+            defCBoxModelTagFilter.addElement(currentTag.getTagName());
         }
 
-        TagComboBox.setModel(dcbm);
-        TagFilterComboBox.setModel(dcbm);
+        TagComboBox.setModel(defCBoxModelTag);
+        TagFilterComboBox.setModel(defCBoxModelTagFilter);
 
 
     }
