@@ -30,4 +30,10 @@ public class TagOperation {
         return em.createQuery("Select tag from Tag tag")
                 .getResultList();
     }
+
+    public String findTagNameById(Long tagId) {
+        return em.createQuery("Select tag.tagName from Tag tag where tag.id = :tagId")
+                .setParameter("tagId", tagId)
+                .getResultList().get(0).toString();
+    }
 }

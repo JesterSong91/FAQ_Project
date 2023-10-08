@@ -103,12 +103,13 @@ public class FAQ_UI {
 
     public void initTable() {
         dtm = new DefaultTableModel();
-        dtm.setColumnIdentifiers(new String[] {"Question", "Answer", "Answer Code"});
+        dtm.setColumnIdentifiers(new String[] {"Question", "Answer", "Answer Code", "Tag"});
 
         List<QuestionAnswer> data = qao.findAllData();
 
         for (QuestionAnswer curr_elem : data) {
-            dtm.addRow(new String[] {curr_elem.getQuestionText(), curr_elem.getAnswerText(), curr_elem.getAnswerExampleCode()});
+            String currTagName = to.findTagNameById(curr_elem.getTagId());
+            dtm.addRow(new String[] {curr_elem.getQuestionText(), curr_elem.getAnswerText(), curr_elem.getAnswerExampleCode(), currTagName});
         }
 
         myRowSorter = new TableRowSorter<DefaultTableModel>(dtm);
