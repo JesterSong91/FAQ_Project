@@ -6,12 +6,15 @@ import ui.QuestionAnswerOperation;
 import ui.TagOperation;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FAQ_UI {
@@ -27,7 +30,6 @@ public class FAQ_UI {
     private JTable AnswersTable;
     private JLabel FilterLabel;
     private JTextField FilterTextField;
-    private JButton FilterButton;
     private JLabel TagFilterLabel;
     private JComboBox TagFilterComboBox;
     private JComboBox TagComboBox;
@@ -42,8 +44,7 @@ public class FAQ_UI {
 
     private String filterText;
 
-    private TableRowSorter myRowSorter;
-
+    private TableRowSorter rowSorter;
     private DefaultTableModel dtm;
     private DefaultComboBoxModel defCBoxModelTag;
     private DefaultComboBoxModel defCBoxModelTagFilter;
@@ -58,6 +59,42 @@ public class FAQ_UI {
         initTable();
         initTagComboBox();
 
+
+        TagFilterComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                recreatingFilters();
+            }
+        });
+
+        FilterTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                recreatingFilters();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                recreatingFilters();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                recreatingFilters();
+            }
+        });
+
+    }
+
+    private void recreatingFilters() {
+        List<RowFilter<DefaultTableModel,Object>> filters = new ArrayList<RowFilter<DefaultTableModel,Object>>(2);
+        filters.add(RowFilter.regexFilter(FilterTextField.getText(), 0));
+        if (!TagFilterComboBox.getSelectedItem().toString().equals("empty")) {
+            filters.add(RowFilter.regexFilter(TagFilterComboBox.getSelectedItem().toString(), 3));
+        }
+        RowFilter<DefaultTableModel,Object> fooBarFilter = RowFilter.andFilter(filters);
+
+        rowSorter.setRowFilter(fooBarFilter);
     }
 
     public void initButtonsActionListeners() {
@@ -88,17 +125,6 @@ public class FAQ_UI {
                 }
             }
         });
-
-        FilterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myRowSorter.setRowFilter(rowFilterFactory(FilterTextField.getText()));
-
-                if (!TagFilterComboBox.getSelectedItem().equals("empty")) {
-                    myRowSorter.setRowFilter(rowFilterFactory(TagFilterComboBox.getSelectedItem().toString()));
-                }
-            }
-        });
     }
 
     public void initTable() {
@@ -112,91 +138,45 @@ public class FAQ_UI {
             dtm.addRow(new String[] {curr_elem.getQuestionText(), curr_elem.getAnswerText(), curr_elem.getAnswerExampleCode(), currTagName});
         }
 
-        myRowSorter = new TableRowSorter<DefaultTableModel>(dtm);
-
+        rowSorter = new TableRowSorter<DefaultTableModel>(dtm);
         AnswersTable.setModel(dtm);
-        AnswersTable.setRowSorter(myRowSorter);
+        AnswersTable.setRowSorter(rowSorter);
 
         ListSelectionModel rowSelectionModel = AnswersTable.getSelectionModel();
         rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                StringBuilder output = new StringBuilder();
+                int viewRow = AnswersTable.getSelectedRow();
+                if (viewRow >= 0) {
 
-                int chosenRowIndex = 0;
+                    int modelRow = AnswersTable.convertRowIndexToModel(viewRow);
 
-                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                    System.out.println("modelRow: " + modelRow);
 
-                int firstIndex = e.getFirstIndex();
-                int lastIndex = e.getLastIndex();
-                boolean isAdjusting = e.getValueIsAdjusting();
-                output.append("Event for indexes "
-                        + firstIndex + " - " + lastIndex
-                        + "; isAdjusting is " + isAdjusting
-                        + "; selected indexes:");
-
-                if (lsm.isSelectionEmpty()) {
-                    output.append(" <none>");
-                } else {
-                    // Find out which indexes are selected.
-                    int minIndex = lsm.getMinSelectionIndex();
-                    int maxIndex = lsm.getMaxSelectionIndex();
-                    for (int i = minIndex; i <= maxIndex; i++) {
-                        if (lsm.isSelectedIndex(i)) {
-                            output.append(" " + i);
-                            chosenRowIndex = i;
-                        }
+                    try {
+                        questionText = dtm.getValueAt(modelRow, 0).toString();
+                    } catch (NullPointerException ex) {
+                        questionText = new String();
                     }
+
+                    try {
+                        answerText = dtm.getValueAt(modelRow, 1).toString();
+                    } catch (NullPointerException ex) {
+                        answerText = new String();
+                    }
+
+                    try {
+                        answerCodeText = dtm.getValueAt(modelRow, 2).toString();
+                    } catch (NullPointerException ex) {
+                        answerCodeText = new String();
+                    }
+
+                    QuestionTextArea.setText(questionText);
+                    AnswerTextArea.setText(answerText);
+                    AnswerCodeTextArea.setText(answerCodeText);
                 }
-
-                System.out.println("chosenRowIndex: " + chosenRowIndex);
-
-                try {
-                    chosenRowIndex = AnswersTable.convertRowIndexToModel(chosenRowIndex);
-                } catch (ArrayIndexOutOfBoundsException ex) {
-                    System.out.println("Do nothing!");
-                    return;
-                }
-
-                try {
-                    questionText = dtm.getValueAt(chosenRowIndex, 0).toString();
-                } catch (NullPointerException ex) {
-                    questionText = new String();
-                }
-
-                try {
-                    answerText = dtm.getValueAt(chosenRowIndex, 1).toString();
-                } catch (NullPointerException ex) {
-                    answerText = new String();
-                }
-
-                try {
-                    answerCodeText = dtm.getValueAt(chosenRowIndex, 2).toString();
-                } catch (NullPointerException ex) {
-                    answerCodeText = new String();
-                }
-
-                QuestionTextArea.setText(questionText);
-                AnswerTextArea.setText(answerText);
-                AnswerCodeTextArea.setText(answerCodeText);
             }
         });
-    }
-
-    public RowFilter rowFilterFactory(String filterText) {
-        RowFilter<DefaultTableModel, String> myRowFilter = new RowFilter<DefaultTableModel, String>() {
-            @Override
-            public boolean include(Entry<? extends DefaultTableModel, ? extends String> entry) {
-                for (int i = entry.getValueCount() - 1; i >=0 ; i--) {
-                    if (entry.getStringValue(i).contains(filterText)){
-                        return true;
-                    }
-                }
-                return false;
-            }
-        };
-
-        return myRowFilter;
     }
 
     public void initTagComboBox() {
@@ -215,6 +195,6 @@ public class FAQ_UI {
         TagComboBox.setModel(defCBoxModelTag);
         TagFilterComboBox.setModel(defCBoxModelTagFilter);
 
-
+        TagFilterComboBox.setSelectedIndex(defCBoxModelTagFilter.getIndexOf("empty"));
     }
 }
