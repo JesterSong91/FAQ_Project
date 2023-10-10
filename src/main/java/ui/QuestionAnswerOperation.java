@@ -1,9 +1,8 @@
 package ui;
 
 import entity.QuestionAnswer;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
+
 import java.util.List;
 
 public class QuestionAnswerOperation {
@@ -95,6 +94,17 @@ public class QuestionAnswerOperation {
     public List findAllData() {
         return em.createQuery("Select faq from QuestionAnswer faq")
                 .getResultList();
+    }
+
+    public void storedFunctionExample() {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("JPA_Test.records_number");
+
+        spq.registerStoredProcedureParameter(1, Integer.class, ParameterMode.OUT);
+
+        boolean result = spq.execute();
+
+        int countValue = (Integer) spq.getOutputParameterValue(1);
+        System.out.println("countValue: " + countValue);
     }
 
 }

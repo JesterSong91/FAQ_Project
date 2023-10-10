@@ -57,6 +57,8 @@ public class FAQ_UI {
         qao = new QuestionAnswerOperation();
         to = new TagOperation();
 
+        qao.storedFunctionExample();
+
         initButtonsActionListeners();
         initTable();
         initTagComboBox();
