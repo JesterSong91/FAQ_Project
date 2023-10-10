@@ -33,6 +33,9 @@ public class FAQ_UI {
     private JComboBox TagFilterComboBox;
     private JComboBox TagComboBox;
     private JLabel TagLabel;
+    private JScrollPane QTextAreaScrollPane;
+    private JScrollPane ATextAreaScrollPane;
+    private JScrollPane ACTextAreaScrollPane;
 
     public QuestionAnswerOperation qao;
     public TagOperation to;
