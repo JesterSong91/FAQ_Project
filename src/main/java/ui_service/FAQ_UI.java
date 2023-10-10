@@ -58,15 +58,10 @@ public class FAQ_UI {
         initButtonsActionListeners();
         initTable();
         initTagComboBox();
+        initTextFields();
+    }
 
-
-        TagFilterComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                recreatingFilters();
-            }
-        });
-
+    private void initTextFields() {
         FilterTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -83,7 +78,6 @@ public class FAQ_UI {
                 recreatingFilters();
             }
         });
-
     }
 
     private void recreatingFilters() {
@@ -196,5 +190,12 @@ public class FAQ_UI {
         TagFilterComboBox.setModel(defCBoxModelTagFilter);
 
         TagFilterComboBox.setSelectedIndex(defCBoxModelTagFilter.getIndexOf("empty"));
+
+        TagFilterComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                recreatingFilters();
+            }
+        });
     }
 }
