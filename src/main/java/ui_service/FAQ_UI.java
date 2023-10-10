@@ -26,7 +26,6 @@ public class FAQ_UI {
     private JLabel QuestionLabel;
     private JTextArea QuestionTextArea;
     public JPanel rootPanel;
-    private JButton ShowContent;
     private JTable AnswersTable;
     private JLabel FilterLabel;
     private JTextField FilterTextField;
@@ -103,20 +102,6 @@ public class FAQ_UI {
                 System.out.println(answerText + " " + questionText + " " + answerCodeText);
 
                 qao.performInsertNewFAQ(answerText, questionText, answerCodeText, tagId);
-            }
-        });
-
-        ShowContent.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                filterText = FilterTextField.getText();
-
-                List<QuestionAnswer> data = qao.findWithName(filterText);
-
-                for (QuestionAnswer curr_elem : data
-                ) {
-                    System.out.print(curr_elem.getAnswerText() + ", ");
-                }
             }
         });
     }

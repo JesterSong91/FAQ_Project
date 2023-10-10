@@ -7,8 +7,6 @@ public class FAQMain {
 
     public FAQMain() {
 
-        System.out.println("For fake commit... Just in order to rollback this change");
-
     }
 
     public static void main(String[] args) {

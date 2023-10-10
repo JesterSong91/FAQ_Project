@@ -76,8 +76,6 @@ public class QuestionAnswerOperation {
 
         String example_code_several_lines = codeText;
 
-        System.out.println("tagId: " + tagId);
-
         questionAnswer.setAnswerExampleCode(example_code_several_lines);
         questionAnswer.setTagId(tagId);
 
@@ -91,13 +89,11 @@ public class QuestionAnswerOperation {
     public List findWithName(String name) {
         return em.createQuery("Select faq from QuestionAnswer faq where faq.questionText LIKE :qName")
                 .setParameter("qName", name)
-//                .setMaxResults(10)
                 .getResultList();
     }
 
     public List findAllData() {
         return em.createQuery("Select faq from QuestionAnswer faq")
-//                .setMaxResults(10)
                 .getResultList();
     }
 
